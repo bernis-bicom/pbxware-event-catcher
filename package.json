@@ -1,0 +1,10 @@
+{
+  "name": "pbxware-event-catcher",
+  "version": "1.0.0",
+  "description": "Self-hosted webhook event catcher for PBXware Event Publisher",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --compile --outfile pbxware-event-catcher"
+  }
+}

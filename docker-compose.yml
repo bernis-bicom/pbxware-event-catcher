@@ -1,0 +1,18 @@
+services:
+  event-catcher:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - STORAGE=memory
+      # - STORAGE=sqlite
+      # - DB_PATH=data/events.db
+      # - PASSWORD=your-secret-password
+      # - MAX_EVENTS=200
+      # - MAX_BODY_BYTES=524288
+    volumes:
+      - data:/app/data
+
+volumes:
+  data:
