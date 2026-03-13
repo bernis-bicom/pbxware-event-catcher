@@ -2,6 +2,8 @@
 
 A simple tool that catches webhook events from PBXware Event Publisher and shows them in a real-time dashboard. You can run it on your own server to see exactly what events PBXware is sending.
 
+![Dashboard](screenshot.png)
+
 ## Getting Started
 
 1. Download the right file for your system from the [Releases](../../releases/latest) page:
