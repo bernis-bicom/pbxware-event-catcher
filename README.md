@@ -9,6 +9,7 @@ A simple tool that catches webhook events from PBXware Event Publisher and shows
    | Your system | Download this file |
    |---|---|
    | Linux (most servers) | `pbxware-event-catcher-linux-x64` |
+   | Linux (older CPU / "Illegal instruction" error) | `pbxware-event-catcher-linux-x64-baseline` |
    | Linux on ARM (Raspberry Pi, etc.) | `pbxware-event-catcher-linux-arm64` |
    | Mac (Intel) | `pbxware-event-catcher-darwin-x64` |
    | Mac (Apple Silicon / M1–M4) | `pbxware-event-catcher-darwin-arm64` |

@@ -6,6 +6,6 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "build": "bun build src/index.ts --compile --outfile pbxware-event-catcher",
-    "build:all": "bun build src/index.ts --compile --target=bun-linux-x64 --outfile dist/pbxware-event-catcher-linux-x64 && bun build src/index.ts --compile --target=bun-linux-arm64 --outfile dist/pbxware-event-catcher-linux-arm64 && bun build src/index.ts --compile --target=bun-darwin-x64 --outfile dist/pbxware-event-catcher-darwin-x64 && bun build src/index.ts --compile --target=bun-darwin-arm64 --outfile dist/pbxware-event-catcher-darwin-arm64 && bun build src/index.ts --compile --target=bun-windows-x64 --outfile dist/pbxware-event-catcher-windows-x64.exe"
+    "build:all": "bun build src/index.ts --compile --target=bun-linux-x64 --outfile dist/pbxware-event-catcher-linux-x64 && bun build src/index.ts --compile --target=bun-linux-x64-baseline --outfile dist/pbxware-event-catcher-linux-x64-baseline && bun build src/index.ts --compile --target=bun-linux-arm64 --outfile dist/pbxware-event-catcher-linux-arm64 && bun build src/index.ts --compile --target=bun-darwin-x64 --outfile dist/pbxware-event-catcher-darwin-x64 && bun build src/index.ts --compile --target=bun-darwin-arm64 --outfile dist/pbxware-event-catcher-darwin-arm64 && bun build src/index.ts --compile --target=bun-windows-x64 --outfile dist/pbxware-event-catcher-windows-x64.exe"
   }
 }
