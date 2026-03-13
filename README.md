@@ -1,28 +1,82 @@
 # PBXware Event Catcher
 
-Self-hosted webhook event catcher for [PBXware](https://www.bicom.com/pbxware/) Event Publisher. Captures incoming webhook events and displays them in a real-time dashboard.
+A simple tool that catches webhook events from PBXware Event Publisher and shows them in a real-time dashboard. You can run it on your own server to see exactly what events PBXware is sending.
 
-## Features
+## Getting Started
 
-- Real-time event dashboard with Server-Sent Events (SSE)
-- Catches POST, PUT, and PATCH webhook payloads
-- Optional SQLite persistence (events survive restarts)
-- Optional password authentication
-- Zero dependencies — runs on [Bun](https://bun.sh) with built-in SQLite
+1. Download the right file for your system from the [`dist/`](dist/) folder:
 
-## Quick Start
+   | Your system | Download this file |
+   |---|---|
+   | Linux (most servers) | `pbxware-event-catcher-linux-x64` |
+   | Linux on ARM (Raspberry Pi, etc.) | `pbxware-event-catcher-linux-arm64` |
+   | Mac (Intel) | `pbxware-event-catcher-darwin-x64` |
+   | Mac (Apple Silicon / M1–M4) | `pbxware-event-catcher-darwin-arm64` |
+   | Windows | `pbxware-event-catcher-windows-x64.exe` |
 
-### Bun (recommended)
+2. Open a terminal and run it:
+
+   **Linux / Mac:**
+   ```bash
+   chmod +x pbxware-event-catcher-linux-x64
+   ./pbxware-event-catcher-linux-x64
+   ```
+
+   **Windows** — double-click the `.exe` file, or run in Command Prompt:
+   ```
+   pbxware-event-catcher-windows-x64.exe
+   ```
+
+3. Open `http://localhost:3000` in your browser — you'll see the dashboard.
+
+4. In PBXware, configure Event Publisher to send events to:
+   ```
+   http://your-server-ip:3000/events
+   ```
+
+That's it! Events will appear in the dashboard in real time.
+
+## Optional Settings
+
+You can configure the tool using environment variables. Set them before the command:
+
+**Linux / Mac:**
+```bash
+PASSWORD=secret STORAGE=sqlite ./pbxware-event-catcher-linux-x64
+```
+
+**Windows (Command Prompt):**
+```
+set PASSWORD=secret
+set STORAGE=sqlite
+pbxware-event-catcher-windows-x64.exe
+```
+
+| Setting | Default | What it does |
+|---|---|---|
+| `PORT` | `3000` | Port the server listens on |
+| `STORAGE` | `memory` | Set to `sqlite` to keep events after restart |
+| `DB_PATH` | `data/events.db` | Where to store the database file (only with `sqlite`) |
+| `PASSWORD` | *(none)* | Set a password to protect the dashboard |
+| `MAX_EVENTS` | `200` | How many events to keep |
+| `MAX_BODY_BYTES` | `524288` | Maximum size of incoming webhooks (512 KB) |
+
+### Password Protection
+
+If you set a `PASSWORD`, the dashboard will show a login screen. In PBXware, add this header to your Event Publisher configuration:
+
+```
+Authorization: Bearer your-password
+```
+
+---
+
+## Advanced: Other Ways to Run
+
+### From source (requires [Bun](https://bun.sh))
 
 ```bash
 bun run src/index.ts
-```
-
-### Compiled Binary
-
-```bash
-bun build src/index.ts --compile --outfile pbxware-event-catcher
-./pbxware-event-catcher
 ```
 
 ### Docker
@@ -38,63 +92,20 @@ docker run -p 3000:3000 pbxware-event-catcher
 docker compose up
 ```
 
-Edit `docker-compose.yml` to configure environment variables.
+Edit `docker-compose.yml` to configure settings.
 
-## Configuration
-
-All configuration is via environment variables:
-
-| Variable | Default | Description |
-|---|---|---|
-| `PORT` | `3000` | Server port |
-| `STORAGE` | `memory` | `memory` or `sqlite` |
-| `DB_PATH` | `data/events.db` | SQLite database path (when `STORAGE=sqlite`) |
-| `PASSWORD` | *(empty)* | If set, enables authentication |
-| `MAX_EVENTS` | `200` | Maximum stored events |
-| `MAX_BODY_BYTES` | `524288` | Maximum request body size (512 KB) |
-
-Example with all options:
+### Compile from Source
 
 ```bash
-PASSWORD=secret STORAGE=sqlite bun run src/index.ts
+bun build src/index.ts --compile --outfile pbxware-event-catcher
 ```
 
-## Usage
-
-### Dashboard
-
-Open `http://localhost:3000` in your browser to view the real-time event dashboard.
-
-### PBXware Configuration
-
-Configure PBXware Event Publisher to send events to:
-
-```
-http://your-server:3000/events
-```
-
-If authentication is enabled, add the header:
-
-```
-Authorization: Bearer your-password
-```
-
-### API
+## API Reference
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `/` | GET | Dashboard UI |
-| `/events` | GET | List stored events (JSON) |
+| `/` | GET | Dashboard |
+| `/events` | GET | List stored events as JSON |
 | `/events` | POST/PUT/PATCH | Receive webhook events |
 | `/events` | DELETE | Clear all events |
-| `/stream` | GET | SSE real-time event stream |
-
-### Authentication
-
-When `PASSWORD` is set:
-
-- **Dashboard**: shows a login form, authenticates via cookie
-- **API**: requires `Authorization: Bearer <password>` header
-- **Logout**: `GET /logout` clears the session
-
-When `PASSWORD` is not set, everything is open.
+| `/stream` | GET | Real-time event stream (SSE) |
