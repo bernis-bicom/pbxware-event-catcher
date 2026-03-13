@@ -64,11 +64,10 @@ pbxware-event-catcher-windows-x64.exe
 
 ### Password Protection
 
-If you set a `PASSWORD`, the dashboard will show a login screen. In PBXware, add this header to your Event Publisher configuration:
+If you set a `PASSWORD`, the dashboard will show a login screen. In PBXware Event Publisher, set the Auth section to:
 
-```
-Authorization: Bearer your-password
-```
+- **Auth Type**: Bearer Token
+- **Token**: your password
 
 ---
 
