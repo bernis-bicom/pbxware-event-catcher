@@ -22,3 +22,13 @@ export function broadcast(event: WebhookEvent): void {
     }
   }
 }
+
+setInterval(() => {
+  for (const client of clients) {
+    try {
+      client.enqueue(":\n\n");
+    } catch {
+      clients.delete(client);
+    }
+  }
+}, 5000);
