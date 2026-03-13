@@ -37,6 +37,7 @@ function requireAuth(req: Request): Response | null {
 }
 
 const server = Bun.serve({
+  hostname: process.env.HOST || "0.0.0.0",
   port: PORT,
   async fetch(req) {
     const url = new URL(req.url);
