@@ -4,7 +4,7 @@ A simple tool that catches webhook events from PBXware Event Publisher and shows
 
 ## Getting Started
 
-1. Download the right file for your system from the [`dist/`](dist/) folder:
+1. Download the right file for your system from the [Releases](../../releases/latest) page:
 
    | Your system | Download this file |
    |---|---|
